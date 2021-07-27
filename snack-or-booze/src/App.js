@@ -7,18 +7,22 @@ import NavBar from "./NavBar";
 import { Route, Switch } from "react-router-dom";
 import Menu from "./FoodMenu";
 import Snack from "./FoodItem";
+import Drink from "./FoodItem";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [snacks, setSnacks] = useState([]);
+  const [drinks, setDrinks] = useState([]);
 
   useEffect(() => {
-    async function getSnacks() {
-      let snacks = await SnackOrBoozeApi.getSnacks();
+    async function getFood() {
+      let snacks = await SnackOrBoozeApi.getFood("snacks");
+      let drinks = await SnackOrBoozeApi.getFood("drinks");
       setSnacks(snacks);
+      setDrinks(drinks);
       setIsLoading(false);
     }
-    getSnacks();
+    getFood();
   }, []);
 
   if (isLoading) {
@@ -32,13 +36,19 @@ function App() {
         <main>
           <Switch>
             <Route exact path="/">
-              <Home snacks={snacks} />
+              <Home snacks={snacks} drinks={drinks} />
             </Route>
             <Route exact path="/snacks">
               <Menu snacks={snacks} title="Snacks" />
             </Route>
             <Route path="/snacks/:id">
               <Snack items={snacks} cantFind="/snacks" />
+            </Route>
+            <Route path="/drinks"> 
+              <Menu drinks={drinks} />
+            </Route>
+            <Route path="/drinks/:id">
+              <Drink items={drinks} cantFind="/drinks" />
             </Route>
             <Route>
               <p>Hmmm. I can't seem to find what you want.</p>

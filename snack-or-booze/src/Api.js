@@ -11,11 +11,10 @@ const BASE_API_URL = "http://localhost:5000";
 
 class SnackOrBoozeApi {
 
-  static async getSnacks() {
-    const result = await axios.get(`${BASE_API_URL}/snacks`);
+  static async getFood(endpoint) {
+    const result = await axios.get(`${BASE_API_URL}/${endpoint}`);
     return result.data;
   }
-
 }
 
 export default SnackOrBoozeApi;
