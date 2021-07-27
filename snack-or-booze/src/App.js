@@ -23,7 +23,7 @@ function App() {
       setIsLoading(false);
     }
     getFood();
-  }, []);
+  }, [isLoading]);
 
   if (isLoading) {
     return <p>Loading &hellip;</p>;
@@ -39,13 +39,13 @@ function App() {
               <Home snacks={snacks} drinks={drinks} />
             </Route>
             <Route exact path="/snacks">
-              <Menu snacks={snacks} title="Snacks" />
+              <Menu food={snacks} title="Snacks" type="snacks" update={() => setIsLoading(true)}/>
             </Route>
             <Route path="/snacks/:id">
               <Snack items={snacks} cantFind="/snacks" />
             </Route>
-            <Route path="/drinks"> 
-              <Menu drinks={drinks} />
+            <Route exact path="/drinks"> 
+              <Menu food={drinks} title="Drinks" type="drinks" update={() => setIsLoading(true)} />
             </Route>
             <Route path="/drinks/:id">
               <Drink items={drinks} cantFind="/drinks" />
